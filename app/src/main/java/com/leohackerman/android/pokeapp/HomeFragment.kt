@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.leohackerman.android.pokeapp.viewmodel.PokeApiViewModel
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -30,9 +31,12 @@ class HomeFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        val pokeApiViewModel:PokeApiViewModel = PokeApiViewModel()
+        pokeApiViewModel.searchPokemon("156")
     }
 
     override fun onCreateView(
+
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
