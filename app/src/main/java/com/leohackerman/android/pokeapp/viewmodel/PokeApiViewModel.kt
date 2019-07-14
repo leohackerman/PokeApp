@@ -1,6 +1,8 @@
 package com.leohackerman.android.pokeapp.viewmodel
 
+import android.arch.lifecycle.MutableLiveData
 import android.util.Log
+import android.util.MutableDouble
 import com.leohackerman.android.pokeapp.base.BaseViewModel
 import com.leohackerman.android.pokeapp.models.Pokemon
 import com.leohackerman.android.pokeapp.network.PokeApi
@@ -14,6 +16,7 @@ class PokeApiViewModel:BaseViewModel() {
     lateinit var pokeApi: PokeApi
 
     private lateinit var subscription: Disposable
+    val pokemon:MutableLiveData<Pokemon> = MutableLiveData()
 
     fun searchPokemon(query:String){
         subscription = pokeApi.searchPokemon(query)
@@ -36,11 +39,11 @@ class PokeApiViewModel:BaseViewModel() {
     }
 
     private fun onSearchSuccess(result: Pokemon) {
-        Log.d("pokeapi",result.toString())
+        pokemon.value = result
     }
 
     private fun onSearchFailed(error: Throwable){
-        Log.d("error",error.toString())
+
 
     }
 
