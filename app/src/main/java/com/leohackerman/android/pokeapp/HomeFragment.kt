@@ -10,7 +10,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import com.leohackerman.android.pokeapp.databinding.FragmentHomeBinding
+import com.leohackerman.android.pokeapp.utils.UIUtils
 import com.leohackerman.android.pokeapp.viewmodel.PokeApiViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -22,10 +24,11 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate<FragmentHomeBinding>(inflater,R.layout.fragment_home,container,false)
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,container,false)
         val view = binding.root
         viewModel = ViewModelProviders.of(this).get(PokeApiViewModel::class.java)
         binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         return view
     }
 
@@ -33,15 +36,25 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
+        observeData()
     }
 
     private fun setListeners(){
-        search_input.setOnEditorActionListener{_, actionId, _ ->
+        search_input.setOnEditorActionListener{textInput, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH){
-                viewModel.searchPokemon("7")
+                UIUtils.hideKeyboard(requireActivity())
+                viewModel.searchPokemon(textInput.text.toString())
             }
             true
         }
+    }
+
+
+    private fun observeData(){
+        viewModel.pokemon.observe(this, Observer {
+            val toats = Toast.makeText(context,"updated",Toast.LENGTH_SHORT)
+            toats.show()
+        })
     }
 
 
