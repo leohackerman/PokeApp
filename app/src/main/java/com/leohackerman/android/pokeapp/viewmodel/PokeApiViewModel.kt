@@ -1,6 +1,7 @@
 package com.leohackerman.android.pokeapp.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
+import android.databinding.BindingAdapter
 import android.util.Log
 import android.util.MutableDouble
 import com.leohackerman.android.pokeapp.base.BaseViewModel
@@ -46,6 +47,13 @@ class PokeApiViewModel:BaseViewModel() {
 
 
     }
+
+    fun getAvatarFrontUrl(): String? {
+        return pokemon.value?.sprites?.front_default
+    }
+
+
+
 
     override fun onCleared() {
         super.onCleared()
