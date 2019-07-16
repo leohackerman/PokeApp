@@ -10,8 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
-import com.bumptech.glide.Glide
 import com.leohackerman.android.pokeapp.databinding.FragmentHomeBinding
 import com.leohackerman.android.pokeapp.utils.UIUtils
 import com.leohackerman.android.pokeapp.viewmodel.PokeApiViewModel
@@ -53,7 +51,7 @@ class HomeFragment : Fragment() {
 
     private fun observeData(){
         viewModel.pokemon.observe(this, Observer {
-            Glide.with(this).load(viewModel.getAvatarFrontUrl()).into(default_avatar)
+            UIUtils.loadImageFromUrl(this,viewModel.getAvatarFrontUrl(),default_avatar)
         })
     }
 
