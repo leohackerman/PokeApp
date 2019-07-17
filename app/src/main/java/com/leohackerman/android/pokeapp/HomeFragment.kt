@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.RadarData
 import com.github.mikephil.charting.data.RadarDataSet
 import com.github.mikephil.charting.data.RadarEntry
@@ -79,20 +80,29 @@ class HomeFragment : Fragment() {
         statsChart.alpha = 1F
 
 
+
+        statsChart.description.isEnabled = false
+
         val xAxis:XAxis = statsChart.xAxis
         val labels:Array<String> = arrayOf("Attack","Defense","Sp. Atk", "Sp. Def", "Speed")
         xAxis.valueFormatter = IndexAxisValueFormatter(labels)
 
+        val yAxis:YAxis = statsChart.yAxis
+        yAxis.setLabelCount(5,false)
+        yAxis.setDrawLabels(false)
+        yAxis.axisMinimum=50f
+        yAxis.axisMaximum-290f
 
 
 
-        setData()
+        setData(viewModel.getTypeColor())
+
         statsChart.animateXY(1600,1600, Easing.EaseInOutQuad, Easing.EaseInOutQuad)
 
     }
 
 
-    private fun setData(){
+    private fun setData(pokemonType:String){
         val dataValues:ArrayList<RadarEntry> = ArrayList()
         dataValues.add(RadarEntry(130f))
         dataValues.add(RadarEntry(150f))
@@ -100,6 +110,10 @@ class HomeFragment : Fragment() {
         dataValues.add(RadarEntry(180f))
         dataValues.add(RadarEntry(140f))
         val radarDataSet:RadarDataSet = RadarDataSet(dataValues,"Base Stats")
+        radarDataSet.color = UIUtils.getTypeColor(resources,pokemonType)
+        radarDataSet.fillColor = UIUtils.getTypeColor(resources,pokemonType)
+        radarDataSet.setDrawFilled(true)
+
         val radarData:RadarData = RadarData()
         radarData.addDataSet(radarDataSet)
         statsChart.data = radarData

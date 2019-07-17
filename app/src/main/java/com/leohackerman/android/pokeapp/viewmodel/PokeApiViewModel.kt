@@ -21,6 +21,8 @@ class PokeApiViewModel:BaseViewModel() {
     val type0:MutableLiveData<Type> = MutableLiveData()
     val type1:MutableLiveData<Type> = MutableLiveData()
 
+    var pokeColor:String = String()
+
 
     fun searchPokemon(query:String){
         subscription = pokeApi.searchPokemon(query)
@@ -46,6 +48,7 @@ class PokeApiViewModel:BaseViewModel() {
         pokemon.value = result
         type0.value = result.types[0].type
         type1.value = result.types[1].type
+        pokeColor = result.types[0].type.name
     }
 
     private fun onSearchFailed(error: Throwable){
@@ -55,6 +58,11 @@ class PokeApiViewModel:BaseViewModel() {
 
     fun getAvatarFrontUrl(): String? {
         return pokemon.value?.sprites?.front_default
+    }
+
+
+    fun getTypeColor():String{
+        return pokemon.value!!.types[0].type.name
     }
 
 
