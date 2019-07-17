@@ -1,11 +1,9 @@
 package com.leohackerman.android.pokeapp.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
-import android.databinding.BindingAdapter
-import android.util.Log
-import android.util.MutableDouble
 import com.leohackerman.android.pokeapp.base.BaseViewModel
 import com.leohackerman.android.pokeapp.models.Pokemon
+import com.leohackerman.android.pokeapp.models.Type
 import com.leohackerman.android.pokeapp.network.PokeApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -16,8 +14,13 @@ class PokeApiViewModel:BaseViewModel() {
     @Inject
     lateinit var pokeApi: PokeApi
 
+
+
     private lateinit var subscription: Disposable
     val pokemon:MutableLiveData<Pokemon> = MutableLiveData()
+    val type0:MutableLiveData<Type> = MutableLiveData()
+    val type1:MutableLiveData<Type> = MutableLiveData()
+
 
     fun searchPokemon(query:String){
         subscription = pokeApi.searchPokemon(query)
@@ -41,6 +44,8 @@ class PokeApiViewModel:BaseViewModel() {
 
     private fun onSearchSuccess(result: Pokemon) {
         pokemon.value = result
+        type0.value = result.types[0].type
+        type1.value = result.types[1].type
     }
 
     private fun onSearchFailed(error: Throwable){
@@ -51,8 +56,6 @@ class PokeApiViewModel:BaseViewModel() {
     fun getAvatarFrontUrl(): String? {
         return pokemon.value?.sprites?.front_default
     }
-
-
 
 
     override fun onCleared() {

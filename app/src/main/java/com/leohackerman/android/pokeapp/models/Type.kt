@@ -1,3 +1,4 @@
 package com.leohackerman.android.pokeapp.models
 
-data class Type(val name:String)
+data class Type(val name:String){
+}
