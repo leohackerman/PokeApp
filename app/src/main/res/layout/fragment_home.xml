@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto">
 	<data>
 		<import type="android.support.v4.content.ContextCompat"/>
@@ -16,7 +16,7 @@
 			android:id="@+id/search_input"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:hint="@string/app_name"
+			android:hint="@string/hint"
 			android:maxLines="1"
 			android:inputType="text"
 			app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +79,7 @@
 			android:background="@color/colorPrimaryDark"
 			android:textSize="20sp"
 			android:textColor="@color/white"
-			android:text="Moves"
+			android:text="@string/btn_moves_txt"
 			android:textAllCaps="false"
 			android:layout_marginBottom="24dp"
 			app:layout_constraintBottom_toBottomOf="parent"

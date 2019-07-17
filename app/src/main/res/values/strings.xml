@@ -3,4 +3,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hint">pokemon name or pokedex number</string>
+    <string name="btn_moves_txt">Moves</string>
 </resources>
