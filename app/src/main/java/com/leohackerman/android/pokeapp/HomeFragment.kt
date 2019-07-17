@@ -18,7 +18,6 @@ import com.github.mikephil.charting.data.RadarData
 import com.github.mikephil.charting.data.RadarDataSet
 import com.github.mikephil.charting.data.RadarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.formatter.ValueFormatter
 import com.leohackerman.android.pokeapp.databinding.FragmentHomeBinding
 import com.leohackerman.android.pokeapp.utils.UIUtils
 import com.leohackerman.android.pokeapp.viewmodel.PokeApiViewModel
@@ -68,56 +67,52 @@ class HomeFragment : Fragment() {
     private fun observeData(){
         viewModel.pokemon.observe(this, Observer {
             UIUtils.loadImageFromUrl(this,viewModel.getAvatarFrontUrl(),default_avatar)
-            configureStatsChart()
+            drawStatsChart()
+            if(viewModel.pokemon.value!!.types.size>1){
+                    pokeType2.visibility = View.VISIBLE
+                }
+            else{
+                pokeType2.visibility = View.INVISIBLE
+            }
         })
     }
 
 
-    private fun configureStatsChart(){
+    private fun drawStatsChart(){
         statsChart.description.isEnabled = false
         statsChart.webLineWidth= 1f
         statsChart.webColor = Color.GRAY
         statsChart.alpha = 1F
-
-
-
         statsChart.description.isEnabled = false
-
         val xAxis:XAxis = statsChart.xAxis
-        val labels:Array<String> = arrayOf("Attack","Defense","Sp. Atk", "Sp. Def", "Speed")
+        val labels:Array<String> = arrayOf("Attack","Defense","Sp. Atk", "Sp. Def", "Speed","Hp")
         xAxis.valueFormatter = IndexAxisValueFormatter(labels)
-
         val yAxis:YAxis = statsChart.yAxis
-        yAxis.setLabelCount(5,false)
+        yAxis.setLabelCount(6,false)
         yAxis.setDrawLabels(false)
         yAxis.axisMinimum=50f
-        yAxis.axisMaximum-290f
-
-
-
         setData(viewModel.getTypeColor())
-
         statsChart.animateXY(1600,1600, Easing.EaseInOutQuad, Easing.EaseInOutQuad)
-
     }
 
 
     private fun setData(pokemonType:String){
         val dataValues:ArrayList<RadarEntry> = ArrayList()
-        dataValues.add(RadarEntry(130f))
-        dataValues.add(RadarEntry(150f))
-        dataValues.add(RadarEntry(120f))
-        dataValues.add(RadarEntry(180f))
-        dataValues.add(RadarEntry(140f))
+        dataValues.add(RadarEntry(viewModel.pokemon.value!!.stats[4].base_stat.toFloat()))
+        dataValues.add(RadarEntry(viewModel.pokemon.value!!.stats[3].base_stat.toFloat()))
+        dataValues.add(RadarEntry(viewModel.pokemon.value!!.stats[2].base_stat.toFloat()))
+        dataValues.add(RadarEntry(viewModel.pokemon.value!!.stats[1].base_stat.toFloat()))
+        dataValues.add(RadarEntry(viewModel.pokemon.value!!.stats[0].base_stat.toFloat()))
+        dataValues.add(RadarEntry(viewModel.pokemon.value!!.stats[5].base_stat.toFloat()))
         val radarDataSet:RadarDataSet = RadarDataSet(dataValues,"Base Stats")
         radarDataSet.color = UIUtils.getTypeColor(resources,pokemonType)
         radarDataSet.fillColor = UIUtils.getTypeColor(resources,pokemonType)
         radarDataSet.setDrawFilled(true)
-
         val radarData:RadarData = RadarData()
         radarData.addDataSet(radarDataSet)
         statsChart.data = radarData
 
     }
+
 
 }

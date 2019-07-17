@@ -68,8 +68,8 @@
 			android:layout_marginStart="4dp"/>
 	<com.github.mikephil.charting.charts.RadarChart
 			android:id="@+id/statsChart"
-			android:layout_width="300dp"
-			android:layout_height="300dp"
+			android:layout_width="250dp"
+			android:layout_height="250dp"
 			app:layout_constraintLeft_toLeftOf="parent"
 			app:layout_constraintRight_toRightOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
