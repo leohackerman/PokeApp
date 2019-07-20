@@ -8,5 +8,5 @@ data class Pokemon(val id: Int,
                    val weight: Int,
                    val stats:List<StatDefinition>,
                    val types:List<TypeDefinition>,
-                   val moves:List<Move>
+                   val moves:List<MoveDefinition>
                    )
