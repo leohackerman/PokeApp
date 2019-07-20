@@ -1,8 +1,6 @@
 package com.leohackerman.android.pokeapp.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import android.view.View
 import com.leohackerman.android.pokeapp.base.BaseViewModel
 import com.leohackerman.android.pokeapp.models.Pokemon
 import com.leohackerman.android.pokeapp.models.Type
@@ -10,6 +8,7 @@ import com.leohackerman.android.pokeapp.network.PokeApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import java.lang.Error
 import javax.inject.Inject
 
 class PokeApiViewModel:BaseViewModel() {
@@ -22,7 +21,7 @@ class PokeApiViewModel:BaseViewModel() {
     val pokemon:MutableLiveData<Pokemon> = MutableLiveData()
     val type0:MutableLiveData<Type> = MutableLiveData()
     val type1:MutableLiveData<Type> = MutableLiveData()
-    val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
+    val errorMessage:MutableLiveData<String> = MutableLiveData()
 
     var pokeColor:String = String()
 
@@ -40,8 +39,6 @@ class PokeApiViewModel:BaseViewModel() {
     }
 
     private fun onSearchStart(){
-        loadingVisibility.value = View.VISIBLE
-
     }
 
     private fun onSearchFinish(){
@@ -56,7 +53,7 @@ class PokeApiViewModel:BaseViewModel() {
     }
 
     private fun onSearchFailed(error: Throwable){
-
+        errorMessage.value = "Pokemon not found"
 
     }
 

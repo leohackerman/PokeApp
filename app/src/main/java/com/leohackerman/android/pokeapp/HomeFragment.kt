@@ -48,10 +48,6 @@ class HomeFragment : Fragment() {
         observeData()
     }
 
-
-
-
-
     private fun setListeners(){
         search_input.setOnEditorActionListener{textInput, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH){
@@ -78,6 +74,18 @@ class HomeFragment : Fragment() {
             else{
                 pokeType2.visibility = View.INVISIBLE
             }
+        })
+
+        viewModel.errorMessage.observe(this, Observer {
+            progressBar.visibility = View.GONE
+            statsChart.visibility = View.INVISIBLE
+            search_input.isEnabled = true
+            UIUtils.showOneButtonDialog(context,"Error",viewModel.errorMessage.value,android.R.string.ok)
+
+
+
+
+
         })
     }
 
@@ -115,8 +123,6 @@ class HomeFragment : Fragment() {
         val radarData:RadarData = RadarData()
         radarData.addDataSet(radarDataSet)
         statsChart.data = radarData
-
     }
-
 
 }

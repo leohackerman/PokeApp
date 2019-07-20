@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -24,6 +25,14 @@ class UIUtils {
             Glide.with(fragment).
                 load(url).
                 into(imageView)
+        }
+
+        fun showOneButtonDialog(context: Context?, title: String, message: String?, buttonTitle:Int){
+            val builder = AlertDialog.Builder(context!!)
+            builder.setTitle(title)
+            builder.setMessage(message)
+            builder.setPositiveButton(buttonTitle) { dialog, which -> }
+            builder.show()
         }
 
 
