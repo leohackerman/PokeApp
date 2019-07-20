@@ -1,4 +1,4 @@
-package com.leohackerman.android.pokeapp
+package com.leohackerman.android.pokeapp.views
 
 
 import android.arch.lifecycle.Observer
@@ -18,6 +18,7 @@ import com.github.mikephil.charting.data.RadarData
 import com.github.mikephil.charting.data.RadarDataSet
 import com.github.mikephil.charting.data.RadarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.leohackerman.android.pokeapp.R
 import com.leohackerman.android.pokeapp.databinding.FragmentHomeBinding
 import com.leohackerman.android.pokeapp.utils.UIUtils
 import com.leohackerman.android.pokeapp.viewmodel.PokeApiViewModel
@@ -33,7 +34,8 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,container,false)
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_home,container,false)
         val view = binding.root
         viewModel = ViewModelProviders.of(this).get(PokeApiViewModel::class.java)
         binding.viewModel = viewModel

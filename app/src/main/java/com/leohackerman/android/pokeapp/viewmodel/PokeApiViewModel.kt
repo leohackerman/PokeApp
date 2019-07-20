@@ -8,7 +8,6 @@ import com.leohackerman.android.pokeapp.network.PokeApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import java.lang.Error
 import javax.inject.Inject
 
 class PokeApiViewModel:BaseViewModel() {
@@ -53,7 +52,7 @@ class PokeApiViewModel:BaseViewModel() {
     }
 
     private fun onSearchFailed(error: Throwable){
-        errorMessage.value = "Pokemon not found"
+        errorMessage.value = error.message
 
     }
 
