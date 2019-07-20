@@ -30,10 +30,6 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: PokeApiViewModel
 
 
-    val MAX_STAT = 180
-    val MIN_STAT = 1
-    val NUM_OF_STATS = 5
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -50,14 +46,19 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
         observeData()
-
     }
+
+
+
+
 
     private fun setListeners(){
         search_input.setOnEditorActionListener{textInput, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH){
                 UIUtils.hideKeyboard(requireActivity())
                 viewModel.searchPokemon(textInput.text.toString())
+                search_input.isEnabled = false
+                progressBar.visibility = View.VISIBLE
             }
             true
         }
@@ -66,6 +67,9 @@ class HomeFragment : Fragment() {
 
     private fun observeData(){
         viewModel.pokemon.observe(this, Observer {
+            progressBar.visibility = View.GONE
+            statsChart.visibility = View.VISIBLE
+            search_input.isEnabled = true
             UIUtils.loadImageFromUrl(this,viewModel.getAvatarFrontUrl(),default_avatar)
             drawStatsChart()
             if(viewModel.pokemon.value!!.types.size>1){

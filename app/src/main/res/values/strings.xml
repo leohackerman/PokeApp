@@ -5,4 +5,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hint">pokemon name or pokedex number</string>
     <string name="btn_moves_txt">Moves</string>
+    <string name="about_title">PokeApp v1.0.0</string>
+    <string name="about_author">\u00A9 2019 <a href="https://github.com/leohackerman">Leonardo Ortiz</a></string>
+    <string name="about_message">All rights reserved. This is an educational app and IS NOT INTENDED for commercial use.Pokémon character names are trademarks of Nintendo.
+        PokeApp uses <a href="https://pokeapi.co">PokeAPI</a> as source of data. The author is not associated with Nintendo or PokeAPI. PokeAPP is released under <a href="https://en.wikipedia.org/wiki/MIT_License">MIT</a> License.</string>
 </resources>
