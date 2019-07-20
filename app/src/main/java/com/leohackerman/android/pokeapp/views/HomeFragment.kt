@@ -60,7 +60,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-
+    /**
+     * Observers to the VM changes
+     */
     private fun observeData(){
         viewModel.pokemon.observe(this, Observer {
             progressBar.visibility = View.GONE
@@ -81,15 +83,12 @@ class HomeFragment : Fragment() {
             statsChart.visibility = View.INVISIBLE
             search_input.isEnabled = true
             UIUtils.showOneButtonDialog(context,"Error",viewModel.errorMessage.value,android.R.string.ok)
-
-
-
-
-
         })
     }
 
-
+    /**
+     * Draws the stats chart
+     */
     private fun drawStatsChart(){
         statsChart.description.isEnabled = false
         statsChart.webLineWidth= 1f
