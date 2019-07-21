@@ -1,5 +1,7 @@
 package com.leohackerman.android.pokeapp.models
 
+import java.io.Serializable
+
 data class Pokemon(val id: Int,
                    val name: String,
                    val base_experience: Int,
@@ -9,4 +11,4 @@ data class Pokemon(val id: Int,
                    val stats:List<StatDefinition>,
                    val types:List<TypeDefinition>,
                    val moves:List<MoveDefinition>
-                   )
+                   ) : Serializable

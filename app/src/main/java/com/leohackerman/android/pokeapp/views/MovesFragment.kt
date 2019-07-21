@@ -2,17 +2,20 @@ package com.leohackerman.android.pokeapp.views
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.leohackerman.android.pokeapp.R
+import com.leohackerman.android.pokeapp.adapters.MoveRecyclerViewAdapter
+import com.leohackerman.android.pokeapp.models.MoveDefinition
+import com.leohackerman.android.pokeapp.models.Pokemon
+import kotlinx.android.synthetic.main.fragment_moves.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+
 
 /**
  * A simple [Fragment] subclass.
@@ -20,13 +23,29 @@ private const val ARG_PARAM2 = "param2"
  */
 class MovesFragment : Fragment() {
 
+    private lateinit var listOfMoves : List<MoveDefinition>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val pokemon = savedInstanceState.get("pokemon")
+        setHasOptionsMenu(true)
+        val pokemon = arguments?.getSerializable("pokemon") as Pokemon
+        listOfMoves = pokemon.moves
         return inflater.inflate(R.layout.fragment_moves, container, false)
     }
 
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        rv_moves_list.layoutManager = LinearLayoutManager(context)
+        rv_moves_list.adapter = MoveRecyclerViewAdapter(listOfMoves)
+    }
+
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val item = menu.findItem(R.id.about_menu)
+        if (item != null)
+            item.isVisible = false
+    }
 }

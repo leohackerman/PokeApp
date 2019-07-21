@@ -1,6 +1,6 @@
 package com.leohackerman.android.pokeapp.base
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.leohackerman.android.pokeapp.injection.DaggerViewModelInjector
 import com.leohackerman.android.pokeapp.injection.ViewModelInjector
 import com.leohackerman.android.pokeapp.injection.module.NetworkModule

@@ -1,6 +1,8 @@
 package com.leohackerman.android.pokeapp.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
+import android.util.Log
+import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import com.leohackerman.android.pokeapp.base.BaseViewModel
 import com.leohackerman.android.pokeapp.models.Pokemon
 import com.leohackerman.android.pokeapp.models.Type
@@ -26,7 +28,8 @@ class PokeApiViewModel:BaseViewModel() {
 
 
     fun searchPokemon(query:String){
-        subscription = pokeApi.searchPokemon(query)
+
+        subscription = pokeApi.searchPokemon(query.toLowerCase())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe{onSearchStart()}
@@ -52,7 +55,12 @@ class PokeApiViewModel:BaseViewModel() {
     }
 
     private fun onSearchFailed(error: Throwable){
-        errorMessage.value = error.message
+        if(error.message=="HTTP 404 "){
+            errorMessage.value = "Pokemon not found"
+        }
+
+
+
 
     }
 

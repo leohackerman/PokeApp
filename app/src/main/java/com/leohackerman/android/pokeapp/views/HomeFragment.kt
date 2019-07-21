@@ -1,17 +1,16 @@
 package com.leohackerman.android.pokeapp.views
 
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.databinding.DataBindingUtil
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.core.os.bundleOf
 import androidx.navigation.Navigation
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.XAxis
@@ -20,11 +19,14 @@ import com.github.mikephil.charting.data.RadarData
 import com.github.mikephil.charting.data.RadarDataSet
 import com.github.mikephil.charting.data.RadarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.leohackerman.android.pokeapp.R
+
 import com.leohackerman.android.pokeapp.databinding.FragmentHomeBinding
 import com.leohackerman.android.pokeapp.utils.UIUtils
 import com.leohackerman.android.pokeapp.viewmodel.PokeApiViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
+
+
+
 
 
 class HomeFragment : Fragment() {
@@ -37,7 +39,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_home,container,false)
+            com.leohackerman.android.pokeapp.R.layout.fragment_home,container,false)
         val view = binding.root
         viewModel = ViewModelProviders.of(this).get(PokeApiViewModel::class.java)
         binding.viewModel = viewModel
@@ -50,6 +52,8 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
         observeData()
+
+
     }
 
     private fun setListeners(){
@@ -65,9 +69,10 @@ class HomeFragment : Fragment() {
         }
 
         btn_moves.setOnClickListener{
-            val bundle = bundleOf(Pair("pokemon",viewModel.pokemon.value))
-            Navigation.findNavController(this!!.activity!!,R.id.nav_host_fragment).
-                navigate(R.id.action_homeFragment_to_movesFragment,bundle)
+            val bundle = Bundle()
+            bundle.putSerializable("pokemon",viewModel.pokemon.value)
+            Navigation.findNavController(this!!.activity!!, com.leohackerman.android.pokeapp.R.id.nav_host_fragment).
+                navigate(com.leohackerman.android.pokeapp.R.id.action_homeFragment_to_movesFragment,bundle)
         }
     }
 
@@ -114,7 +119,7 @@ class HomeFragment : Fragment() {
         val yAxis:YAxis = statsChart.yAxis
         yAxis.setLabelCount(6,false)
         yAxis.setDrawLabels(false)
-        yAxis.axisMinimum=50f
+        yAxis.axisMinimum=1f
         setData(viewModel.getTypeColor())
         statsChart.animateXY(1600,1600, Easing.EaseInOutQuad, Easing.EaseInOutQuad)
     }
@@ -136,5 +141,8 @@ class HomeFragment : Fragment() {
         radarData.addDataSet(radarDataSet)
         statsChart.data = radarData
     }
+
+
+
 
 }

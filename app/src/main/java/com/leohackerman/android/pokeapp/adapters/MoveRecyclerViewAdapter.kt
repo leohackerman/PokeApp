@@ -1,6 +1,6 @@
 package com.leohackerman.android.pokeapp.adapters
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import com.leohackerman.android.pokeapp.R
 import com.leohackerman.android.pokeapp.models.MoveDefinition
 import kotlinx.android.synthetic.main.move_list_item.view.*
 
-class MoveRecyclerViewAdapter(val moves: ArrayList<MoveDefinition>) : RecyclerView.Adapter<MoveRecyclerViewAdapter.ViewHolder>()  {
+class MoveRecyclerViewAdapter(val moves: List<MoveDefinition>) : RecyclerView.Adapter<MoveRecyclerViewAdapter.ViewHolder>()  {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindItems(moves[position])
     }

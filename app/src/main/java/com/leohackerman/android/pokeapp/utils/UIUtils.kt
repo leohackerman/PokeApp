@@ -3,8 +3,8 @@ package com.leohackerman.android.pokeapp.utils
 import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
-import android.support.v4.app.Fragment
-import android.support.v7.app.AlertDialog
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AlertDialog
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import com.bumptech.glide.Glide
