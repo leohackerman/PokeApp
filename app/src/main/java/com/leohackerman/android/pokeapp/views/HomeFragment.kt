@@ -11,6 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.core.os.bundleOf
+import androidx.navigation.Navigation
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -57,8 +59,15 @@ class HomeFragment : Fragment() {
                 viewModel.searchPokemon(textInput.text.toString())
                 search_input.isEnabled = false
                 progressBar.visibility = View.VISIBLE
+                btn_moves.visibility = View.GONE
             }
             true
+        }
+
+        btn_moves.setOnClickListener{
+            val bundle = bundleOf(Pair("pokemon",viewModel.pokemon.value))
+            Navigation.findNavController(this!!.activity!!,R.id.nav_host_fragment).
+                navigate(R.id.action_homeFragment_to_movesFragment,bundle)
         }
     }
 
@@ -70,6 +79,7 @@ class HomeFragment : Fragment() {
             progressBar.visibility = View.GONE
             statsChart.visibility = View.VISIBLE
             search_input.isEnabled = true
+            btn_moves.visibility = View.VISIBLE
             UIUtils.loadImageFromUrl(this,viewModel.getAvatarFrontUrl(),default_avatar)
             drawStatsChart()
             if(viewModel.pokemon.value!!.types.size>1){
@@ -84,6 +94,7 @@ class HomeFragment : Fragment() {
             progressBar.visibility = View.GONE
             statsChart.visibility = View.INVISIBLE
             search_input.isEnabled = true
+            btn_moves.visibility = View.INVISIBLE
             UIUtils.showOneButtonDialog(context,"Error",viewModel.errorMessage.value,android.R.string.ok)
         })
     }
