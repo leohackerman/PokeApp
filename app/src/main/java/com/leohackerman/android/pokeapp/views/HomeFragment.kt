@@ -24,6 +24,7 @@ import com.github.mikephil.charting.data.RadarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.leohackerman.android.pokeapp.R
 import com.leohackerman.android.pokeapp.databinding.FragmentHomeBinding
+import com.leohackerman.android.pokeapp.models.Pokemon
 import com.leohackerman.android.pokeapp.utils.UIUtils
 import com.leohackerman.android.pokeapp.viewmodel.PokeApiViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -35,6 +36,21 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: PokeApiViewModel
     @BindView(R.id.constraint_layout)
     lateinit var stateConstraintLayout: ConstraintLayout
+    //Observers
+    private val pokemonObserver = Observer<Pokemon> {
+        stateConstraintLayout.setState(R.id.found,0,0)
+        UIUtils.loadImageFromUrl(this,viewModel.getAvatarFrontUrl(),default_avatar)
+        drawStatsChart()
+        if(viewModel.pokemon.value!!.types.size>1){
+            pokeType2.visibility = View.VISIBLE
+        }
+        else{
+            pokeType2.visibility = View.INVISIBLE
+        }
+    }
+    private val errorObserver = Observer<String> {
+        stateConstraintLayout.setState(R.id.error,0,0)
+    }
 
 
 
@@ -56,13 +72,10 @@ class HomeFragment : Fragment() {
     }
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
         observeData()
-
-
     }
 
     private fun setListeners(){
@@ -87,22 +100,11 @@ class HomeFragment : Fragment() {
      * Observers to the VM changes
      */
     private fun observeData(){
-        viewModel.pokemon.observe(this, Observer {
-            stateConstraintLayout.setState(R.id.found,0,0)
-            UIUtils.loadImageFromUrl(this,viewModel.getAvatarFrontUrl(),default_avatar)
-            drawStatsChart()
-            if(viewModel.pokemon.value!!.types.size>1){
-                pokeType2.visibility = View.VISIBLE
-                }
-            else{
-                pokeType2.visibility = View.INVISIBLE
-            }
-        })
+        viewModel.errorMessage.observe(this, errorObserver)
+        viewModel.pokemon.observe(this, pokemonObserver)
 
 
-        viewModel.errorMessage.observe(this, Observer {
-            stateConstraintLayout.setState(R.id.error,0,0)
-        })
+
     }
 
     /**
@@ -145,7 +147,8 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        viewModel.errorMessage.removeObserver(ob)
+        viewModel.errorMessage.removeObserver(errorObserver)
+        viewModel.pokemon.removeObserver(pokemonObserver)
 
     }
 }

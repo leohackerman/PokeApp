@@ -1,7 +1,5 @@
 package com.leohackerman.android.pokeapp.viewmodel
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.leohackerman.android.pokeapp.base.BaseViewModel
 import com.leohackerman.android.pokeapp.models.Pokemon
@@ -58,10 +56,6 @@ class PokeApiViewModel:BaseViewModel() {
         if(error.message=="HTTP 404 "){
             errorMessage.value = "Pokemon not found"
         }
-
-
-
-
     }
 
     fun getAvatarFrontUrl(): String? {
