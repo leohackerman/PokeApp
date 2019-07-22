@@ -4,6 +4,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hint">pokemon name or pokedex number</string>
+    <string name="error_message">Pokemon not found</string>
     <string name="btn_moves_txt">Moves</string>
     <string name="about_title">PokeApp v1.0.0</string>
     <string name="about_author">\u00A9 2019

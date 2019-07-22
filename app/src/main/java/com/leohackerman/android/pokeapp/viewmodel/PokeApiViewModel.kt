@@ -74,10 +74,5 @@ class PokeApiViewModel:BaseViewModel() {
     }
 
 
-    override fun onCleared() {
-        super.onCleared()
-        subscription.dispose()
-    }
-
 
 }

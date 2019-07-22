@@ -11,7 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.Navigation
+import butterknife.BindView
+import butterknife.ButterKnife
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -19,20 +22,19 @@ import com.github.mikephil.charting.data.RadarData
 import com.github.mikephil.charting.data.RadarDataSet
 import com.github.mikephil.charting.data.RadarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-
+import com.leohackerman.android.pokeapp.R
 import com.leohackerman.android.pokeapp.databinding.FragmentHomeBinding
 import com.leohackerman.android.pokeapp.utils.UIUtils
 import com.leohackerman.android.pokeapp.viewmodel.PokeApiViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
-
-
-
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: PokeApiViewModel
+    @BindView(R.id.constraint_layout)
+    lateinit var stateConstraintLayout: ConstraintLayout
 
 
 
@@ -43,9 +45,16 @@ class HomeFragment : Fragment() {
         val view = binding.root
         viewModel = ViewModelProviders.of(this).get(PokeApiViewModel::class.java)
         binding.viewModel = viewModel
+        ButterKnife.bind(this,view)
         binding.lifecycleOwner = this
+        initViews()
         return view
     }
+
+    private fun initViews(){
+        stateConstraintLayout.loadLayoutDescription(R.xml.pokemon_states)
+    }
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,9 +70,7 @@ class HomeFragment : Fragment() {
             if (actionId == EditorInfo.IME_ACTION_SEARCH){
                 UIUtils.hideKeyboard(requireActivity())
                 viewModel.searchPokemon(textInput.text.toString())
-                search_input.isEnabled = false
-                progressBar.visibility = View.VISIBLE
-                btn_moves.visibility = View.GONE
+                stateConstraintLayout.setState(R.id.loading,0,0)
             }
             true
         }
@@ -81,26 +88,20 @@ class HomeFragment : Fragment() {
      */
     private fun observeData(){
         viewModel.pokemon.observe(this, Observer {
-            progressBar.visibility = View.GONE
-            statsChart.visibility = View.VISIBLE
-            search_input.isEnabled = true
-            btn_moves.visibility = View.VISIBLE
+            stateConstraintLayout.setState(R.id.found,0,0)
             UIUtils.loadImageFromUrl(this,viewModel.getAvatarFrontUrl(),default_avatar)
             drawStatsChart()
             if(viewModel.pokemon.value!!.types.size>1){
-                    pokeType2.visibility = View.VISIBLE
+                pokeType2.visibility = View.VISIBLE
                 }
             else{
                 pokeType2.visibility = View.INVISIBLE
             }
         })
 
+
         viewModel.errorMessage.observe(this, Observer {
-            progressBar.visibility = View.GONE
-            statsChart.visibility = View.INVISIBLE
-            search_input.isEnabled = true
-            btn_moves.visibility = View.INVISIBLE
-            UIUtils.showOneButtonDialog(context,"Error",viewModel.errorMessage.value,android.R.string.ok)
+            stateConstraintLayout.setState(R.id.error,0,0)
         })
     }
 
@@ -142,7 +143,9 @@ class HomeFragment : Fragment() {
         statsChart.data = radarData
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.errorMessage.removeObserver(ob)
 
-
-
+    }
 }

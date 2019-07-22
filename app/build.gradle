@@ -25,6 +25,10 @@ android {
     dataBinding {
         enabled = true
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -32,14 +36,13 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'androidx.core:core-ktx:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.0.0-rc02'
     implementation 'androidx.navigation:navigation-ui-ktx:2.0.0-rc02'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     // LiveData & ViewModel
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     //Retrofit and moshi
@@ -60,6 +63,9 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     //Recyclerview
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    //Butter Knife
+    implementation "com.jakewharton:butterknife:$butterknife_version"
+    kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
 
 
 
